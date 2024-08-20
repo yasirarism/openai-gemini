@@ -28,8 +28,7 @@ export default {
         
         ai = AsyncOpenAI(api_key=YOUR_GEMINI_API_KEY, base_url="${url.origin}/v1")
         response = await ai.chat.completions.create(
-                    extra_body={"model":"gemini-1.5-flash"},
-                    model="gpt-4o",
+                    model="gemini-1.5-flash",
                     messages=[{"role": "system", "content": "mulai sekarang kamu adalah misskaty ai"}, {"role": "user", "content": "Siapa nama kamu?"}],
                     temperature=0.7,
                     stream=False,
