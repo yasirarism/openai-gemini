@@ -8,7 +8,20 @@ export default {
     }
     const url = new URL(request.url);
     if (!url.pathname.endsWith("/v1/chat/completions") || request.method !== "POST") {
-      return new Response("404 Not Found", { status: 404 });
+      return new Response(`
+        Hello Gemini-OpenAI-Proxy from YasirDev!
+    
+        You can try it with:
+    
+        curl ${url.origin}/v1/chat/completions \\
+        -H "Authorization: Bearer $YOUR_GEMINI_API_KEY" \\
+        -H "Content-Type: application/json" \\
+        -d '{
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "system", "content": "from now you're misskaty ai."}, {"role":"user", "content":"siapa nama kamu?"}],
+            "temperature": 0.7
+        }'
+        `)
     }
     const auth = request.headers.get("Authorization");
     let apiKey = auth && auth.split(" ")[1];
