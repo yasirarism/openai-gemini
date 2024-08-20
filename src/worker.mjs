@@ -12,15 +12,29 @@ export default {
         Hello Gemini-OpenAI-Proxy from YasirDev!
     
         You can try it with:
-    
+
+        CURL
         curl ${url.origin}/v1/chat/completions \\
         -H "Authorization: Bearer $YOUR_GEMINI_API_KEY" \\
         -H "Content-Type: application/json" \\
         -d '{
-            "model": "gpt-3.5-turbo",
+            "model": "gemini-1.5-flash",
             "messages": [{"role": "system", "content": "from now you're misskaty ai."}, {"role":"user", "content":"siapa nama kamu?"}],
             "temperature": 0.7
         }'
+
+        PYTHON
+        from openai import APIConnectionError, APIStatusError, AsyncOpenAI, RateLimitError
+        
+        ai = AsyncOpenAI(api_key=YOUR_GEMINI_API_KEY, base_url="${url.origin}/v1")
+        response = await ai.chat.completions.create(
+                    extra_body={"model":"gemini-1.5-flash"},
+                    model="gpt-4o",
+                    messages=[{"role": "system", "content": "mulai sekarang kamu adalah misskaty ai"}, {"role": "user", "content": "Siapa nama kamu?"}],
+                    temperature=0.7,
+                    stream=False,
+        )
+        response.choices[0].message
         `)
     }
     const auth = request.headers.get("Authorization");
